@@ -1,0 +1,70 @@
+﻿@model List<Member>
+
+@{
+    ViewData["Title"] = "Add a Brother";
+}
+
+<h2>Add a Brother</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="HandleNewMember">
+            <div class="form-group">
+                <label for="firstName" class="control-label">First name of member</label>
+                <input name="firstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="control-label">Last name of member</label>
+                <input name="lastName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label">Email address of member</label>
+                <input name="email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="phone" class="control-label">Phone number of member</label>
+                <input name="phone" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add a new member" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<h2>Existing Members</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Email Address
+            </th>
+            <th>
+                Phone Number
+            </th>
+        </tr>
+    </thead>
+    @foreach (Member newMem in Model)
+    {
+    <tr>
+        <td>
+            @newMem.FirstName
+        </td>
+        <td>
+            @newMem.LastName
+        </td>
+        <td>
+            @newMem.Email
+        </td>
+        <td>
+            @newMem.PhoneNumber
+        </td>
+    </tr>
+    }
+</table>

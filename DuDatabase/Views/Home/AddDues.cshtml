@@ -1,0 +1,59 @@
+﻿@model List<Dues>
+
+@{
+    ViewData["Title"] = "AddDues";
+}
+
+<h2>AddDues</h2>
+<h2>Add a Requirements to a Brother</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="HandleNewDues">
+            <div class="form-group">
+                <label for="amount" class="control-label">Amount of Dues owed</label>
+                <input name="amount" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="paymentPlan" class="control-label">Is this brother on a payment plan? (Yes/No)</label>
+                <input name="paymentPlan" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="serviceHours" class="control-label">How manys service hours does this brother have?</label>
+                <input name="serviceHours" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="fundraising" class="control-label">How much money has this brother fundraised? #CaterNation</label>
+                <input name="fundraising" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit Requirements" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<h2>Existing Members</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+        </tr>
+    </thead>
+    @foreach (Dues newRequirements in Model)
+    {
+        <tr>
+            <td>
+                @newRequirements.Member.FirstName
+            </td>
+            <td>
+                @newRequirements.Member.LastName
+            </td>
+        </tr>
+    }
+</table>

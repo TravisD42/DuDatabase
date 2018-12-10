@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DuDatabase.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DuDatabase.Controllers
 {
@@ -29,7 +30,8 @@ namespace DuDatabase.Controllers
 
         public IActionResult AddDues()
         {
-            return View(context.Dues.ToList());
+            var allDues = context.Dues.Include(member => member.Member).ToList();
+            return View(allDues);
         }
 
         [HttpPost]
@@ -43,9 +45,10 @@ namespace DuDatabase.Controllers
         }
 
         [HttpPost]
-        public IActionResult HandleNewDues(float amount, string paymentPlan, float serviceHours, float fundraising)
+        public IActionResult HandleNewDues(int memberId, float amount, string paymentPlan, float serviceHours, float fundraising)
         {
-            Dues newDues = new Dues() { Amount = amount, PaymentPlan = paymentPlan, ServiceHours = serviceHours, Fundraising = fundraising };
+            Member existingMember = context.Members.Where(existingMem => existingMem.Id == memberId).Single();
+            Dues newDues = new Dues() { Member = existingMember, Amount = amount, PaymentPlan = paymentPlan, ServiceHours = serviceHours, Fundraising = fundraising};
             context.Dues.Add(newDues);
             context.SaveChanges();
 

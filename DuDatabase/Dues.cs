@@ -13,7 +13,6 @@ namespace DuDatabase.Models
         public float ServiceHours { get; set; }
         public float Fundraising { get; set; }
 
-        public int MemberId { get; set; }
         public Member Member { get; set; }
     }
 }

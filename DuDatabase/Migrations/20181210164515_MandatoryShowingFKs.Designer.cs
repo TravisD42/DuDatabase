@@ -11,8 +11,8 @@ using System;
 namespace DuDatabase.Migrations
 {
     [DbContext(typeof(DeltaUpsilonContext))]
-    [Migration("20181207075608_MandatoryShowingForeignKeys")]
-    partial class MandatoryShowingForeignKeys
+    [Migration("20181210164515_MandatoryShowingFKs")]
+    partial class MandatoryShowingFKs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,11 +64,16 @@ namespace DuDatabase.Migrations
 
                     b.Property<float>("Fundraising");
 
-                    b.Property<bool>("PaymentPlan");
+                    b.Property<int>("MemberId");
+
+                    b.Property<string>("PaymentPlan");
 
                     b.Property<float>("ServiceHours");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MemberId")
+                        .IsUnique();
 
                     b.ToTable("Dues");
                 });
@@ -77,8 +82,6 @@ namespace DuDatabase.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("DuesId");
 
                     b.Property<string>("Email");
 
@@ -89,9 +92,6 @@ namespace DuDatabase.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DuesId")
-                        .IsUnique();
 
                     b.ToTable("Members");
                 });
@@ -127,11 +127,11 @@ namespace DuDatabase.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DuDatabase.Models.Member", b =>
+            modelBuilder.Entity("DuDatabase.Models.Dues", b =>
                 {
-                    b.HasOne("DuDatabase.Models.Dues", "Dues")
-                        .WithOne("Member")
-                        .HasForeignKey("DuDatabase.Models.Member", "DuesId")
+                    b.HasOne("DuDatabase.Models.Member", "Member")
+                        .WithOne("Dues")
+                        .HasForeignKey("DuDatabase.Models.Dues", "MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

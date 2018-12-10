@@ -1,7 +1,7 @@
-﻿@model List<Dues>
+﻿@model List<Member>
 
 @{
-    ViewData["Title"] = "AddDues";
+    ViewData["Title"] = "Add Dues";
 }
 
 <h2>AddDues</h2>
@@ -10,6 +10,10 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="HandleNewDues">
+            <div class="form-group">
+                <label for="memberId" class="control-label">Choose a Brother</label>
+                @Html.DropDownList("memberId", new SelectList(Model, "FirstName", "LastName"), "Select a Brother", new { @class = "form-control" })
+            </div>
             <div class="form-group">
                 <label for="amount" class="control-label">Amount of Dues owed</label>
                 <input name="amount" class="form-control" />
@@ -33,7 +37,7 @@
     </div>
 </div>
 
-<h2>Existing Members</h2>
+<h2>Member Responsibilities</h2>
 <table class="table">
     <thead>
         <tr>
@@ -43,17 +47,31 @@
             <th>
                 Last Name
             </th>
+            <th>
+                Amount Owed
+            </th>
+            <th>
+                Service Hours
+            </th>
+            <th>
+                Fundraising
+            </th>
         </tr>
     </thead>
-    @foreach (Dues newRequirements in Model)
+    @foreach (Member existMem in Model)
     {
         <tr>
             <td>
-                @newRequirements.Member.FirstName
+                @existMem.FirstName
             </td>
             <td>
-                @newRequirements.Member.LastName
+                @existMem.LastName
             </td>
         </tr>
+    }
+    @foreach (Dues dues in Model)
+    {
+
+
     }
 </table>

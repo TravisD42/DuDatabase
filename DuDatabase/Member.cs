@@ -14,7 +14,5 @@ namespace DuDatabase.Models
         public string PhoneNumber { get; set; }
 
         public ICollection<CommitteehasMembers> CommitteeMembers { get; set; } = new List<CommitteehasMembers>();
-
-        public Dues Dues { get; set; }
     }
 }

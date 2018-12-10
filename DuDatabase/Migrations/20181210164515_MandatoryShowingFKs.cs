@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DuDatabase.Migrations
 {
-    public partial class MandatoryShowingForeignKeys : Migration
+    public partial class MandatoryShowingFKs : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

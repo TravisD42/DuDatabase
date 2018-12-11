@@ -44,9 +44,9 @@ namespace DuDatabase.Controllers
         }
 
         [HttpPost]
-        public IActionResult HandleNewCommittee(string name, float budget, float moneyRaised)
+        public IActionResult HandleNewCommittee(string name, float budget)
         {
-            Committee newCommittee = new Committee() { Name = name, Budget = budget, MoneyRaised = moneyRaised };
+            Committee newCommittee = new Committee() { Name = name, Budget = budget};
             context.Committees.Add(newCommittee);
             context.SaveChanges();
 
@@ -55,7 +55,54 @@ namespace DuDatabase.Controllers
 
         public IActionResult CommitteeHasMembers()
         {
-            return View(context.CommitteehasMembers.ToList());
+            List<Object> memberNames = new List<Object>();
+            List<Object> committeeNames = new List<Object>();
+            List<Object> listofMembers = new List<Object>();
+            List<Object> listofComm = new List<Object>();
+
+            var allMembers = context.Members.Include(member => member.CommitteehasMembers).ToList();
+            foreach (Member member in allMembers)
+            {
+                memberNames.Add(member);
+            }
+
+            var allCommittees = context.Committees.Include(committee => committee.CommitteehasMembers).ToList();
+            foreach(Committee committee in allCommittees)
+            {
+                committeeNames.Add(committee);
+            }
+
+            var allEntries = context.CommitteehasMembers.Include(memInCommittee => memInCommittee.Member).ToList();
+            foreach (CommitteehasMembers chm in allEntries)
+            {
+                listofMembers.Add(chm);
+            }
+
+            var allComm = context.CommitteehasMembers.Include(commInMember => commInMember.Committee).ToList();
+            foreach (CommitteehasMembers chm2 in allComm)
+            {
+                listofComm.Add(chm2);
+            }
+
+            ViewData["memberNames"] = memberNames;
+            ViewData["committeeNames"] = committeeNames;
+            ViewData["listofMembers"] = listofMembers;
+            ViewData["listofComm"] = listofComm;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult HandleMembertoCommittee(int memberId, int committeeId)
+        {
+            Committee exisitngCommittee = context.Committees.Where(committee => committee.Id == committeeId).Single();
+            Member existingMember = context.Members.Where(member => member.Id == memberId).Single();
+            CommitteehasMembers newMem = new CommitteehasMembers() { MemberId = memberId, CommitteeId = committeeId };
+            // This is where I maybe have to send a new view?
+            context.CommitteehasMembers.Add(newMem);
+            context.SaveChanges();
+
+            return RedirectToAction("CommitteeHasMembers");
         }
 
         public IActionResult AddTransaction()
@@ -65,9 +112,11 @@ namespace DuDatabase.Controllers
         }
 
         [HttpPost]
-        public IActionResult HandleNewTransaction(float amountSpent, float amountAdded)
+        public IActionResult HandleNewTransaction(int committeeId, float amountSpent, float amountAdded)
         {
-            Transaction newTrans = new Transaction() { AmountSpent = amountSpent, AmountAdded = amountAdded };
+            Committee existingCommittee = context.Committees.Where(committee => committee.Id == committeeId).Single();
+            Transaction newTrans = new Transaction() { Committee = existingCommittee, AmountSpent = amountSpent, AmountAdded = amountAdded };
+            existingCommittee.Budget = (existingCommittee.Budget - newTrans.AmountSpent) + newTrans.AmountAdded;
             context.Transactions.Add(newTrans);
             context.SaveChanges();
 

@@ -11,9 +11,10 @@ using System;
 namespace DuDatabase.Migrations
 {
     [DbContext(typeof(DeltaUpsilonContext))]
-    partial class DeltaUpsilonContextModelSnapshot : ModelSnapshot
+    [Migration("20181211082813_ForeignKeys")]
+    partial class ForeignKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +27,8 @@ namespace DuDatabase.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<float>("Budget");
+
+                    b.Property<float>("MoneyRaised");
 
                     b.Property<string>("Name");
 
@@ -88,8 +91,6 @@ namespace DuDatabase.Migrations
                     b.Property<float>("AmountSpent");
 
                     b.Property<int?>("CommitteeId");
-
-                    b.Property<string>("Description");
 
                     b.HasKey("Id");
 

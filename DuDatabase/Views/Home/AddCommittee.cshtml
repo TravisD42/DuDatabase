@@ -1,59 +1,50 @@
 ﻿@{
     ViewData["Title"] = "Add a Committee";
 }
-
-<h2>Add a Committee</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="HandleNewCommittee">
-            <div class="form-group">
-                <label for="name" class="control-label">Name of Committee</label>
-                <input name="name" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="budget" class="control-label">Budget for Committee</label>
-                <input name="budget" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="moneyRaised" class="control-label">Money Committee has Raised</label>
-                <input name="moneyRaised" class="form-control" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add a new committee" class="btn btn-default" />
-            </div>
-        </form>
+<body style="background-color:royalblue; color:black;">
+    <h2>Add a Committee</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="HandleNewCommittee">
+                <div class="form-group">
+                    <label for="name" class="control-label">Name of Committee</label>
+                    <input name="name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="budget" class="control-label">Budget for Committee</label>
+                    <input name="budget" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add a new committee" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<h2>Existing Committees</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Committee Name
-            </th>
-            <th>
-                Budget
-            </th>
-            <th>
-                Money Raised
-            </th>
-        </tr>
-    </thead>
-    @foreach (Committee committee in Model)
-    {
-        <tr>
-            <td>
-                @committee.Name
-            </td>
-            <td>
-                @committee.Budget
-            </td>
-            <td>
-                @committee.MoneyRaised
-            </td>
-        </tr>
-    }
-</table>
+    <h2>Existing Committees</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Committee Name
+                </th>
+                <th>
+                    Budget
+                </th>
+            </tr>
+        </thead>
+        @foreach (Committee committee in Model)
+        {
+            <tr>
+                <td>
+                    @committee.Name
+                </td>
+                <td>
+                    @committee.Budget
+                </td>
+            </tr>
+        }
+    </table>
+</body>
 

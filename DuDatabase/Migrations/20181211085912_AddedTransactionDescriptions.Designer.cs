@@ -11,9 +11,10 @@ using System;
 namespace DuDatabase.Migrations
 {
     [DbContext(typeof(DeltaUpsilonContext))]
-    partial class DeltaUpsilonContextModelSnapshot : ModelSnapshot
+    [Migration("20181211085912_AddedTransactionDescriptions")]
+    partial class AddedTransactionDescriptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

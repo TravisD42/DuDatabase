@@ -17,6 +17,6 @@ namespace DuDatabase.Models
         public float ServiceHours { get; set; }
         public float Fundraising { get; set; }
 
-        public ICollection<CommitteehasMembers> CommitteeMembers { get; set; } = new List<CommitteehasMembers>();
+        public ICollection<CommitteehasMembers> CommitteehasMembers { get; set; } = new List<CommitteehasMembers>();
     }
 }

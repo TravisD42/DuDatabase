@@ -11,7 +11,7 @@ namespace DuDatabase.Models
         public DbSet<Member> Members { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Committee> Committees { get; set; }
-        public DbSet<CommitteehasMembers> CommitteeMembers { get; set; }
+        public DbSet<CommitteehasMembers> CommitteehasMembers { get; set; }
         public DeltaUpsilonContext(DbContextOptions<DeltaUpsilonContext> options)
         : base(options)
         {

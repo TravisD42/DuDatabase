@@ -10,10 +10,9 @@ namespace DuDatabase.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public float Budget { get; set; }
+        public float MoneyRaised { get; set; }
 
-        public ICollection<CommitteehasMembers> CommitteeMembers { get; set; } = new List<CommitteehasMembers>();
-    
-        public int TransactionId { get; set; }
+        public ICollection<CommitteehasMembers> CommitteehasMembers { get; set; } = new List<CommitteehasMembers>();
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }

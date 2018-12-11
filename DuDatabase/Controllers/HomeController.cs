@@ -28,12 +28,6 @@ namespace DuDatabase.Controllers
             return View(context.Members.ToList());
         }
 
-
-        public IActionResult AddCommittee()
-        {
-            return View(context.Committees.ToList());
-        }
-
         [HttpPost]
         public IActionResult HandleNewMember(string firstName, string lastName, string email, string phone, float amount, string paymentPlan, float serviceHours, float fundraising)
         {
@@ -42,6 +36,42 @@ namespace DuDatabase.Controllers
             context.SaveChanges();
 
             return RedirectToAction("AddMember");
+        }
+
+        public IActionResult AddCommittee()
+        {
+            return View(context.Committees.ToList());
+        }
+
+        [HttpPost]
+        public IActionResult HandleNewCommittee(string name, float budget, float moneyRaised)
+        {
+            Committee newCommittee = new Committee() { Name = name, Budget = budget, MoneyRaised = moneyRaised };
+            context.Committees.Add(newCommittee);
+            context.SaveChanges();
+
+            return RedirectToAction("AddCommittee");
+        }
+
+        public IActionResult CommitteeHasMembers()
+        {
+            return View(context.CommitteehasMembers.ToList());
+        }
+
+        public IActionResult AddTransaction()
+        {
+            var allCommittees = context.Committees.Include(committee => committee.Transactions).ToList();
+            return View(allCommittees);
+        }
+
+        [HttpPost]
+        public IActionResult HandleNewTransaction(float amountSpent, float amountAdded)
+        {
+            Transaction newTrans = new Transaction() { AmountSpent = amountSpent, AmountAdded = amountAdded };
+            context.Transactions.Add(newTrans);
+            context.SaveChanges();
+
+            return RedirectToAction("AddTransaction");
         }
 
         public IActionResult Error()

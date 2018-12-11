@@ -1,0 +1,56 @@
+﻿@model List<Committee>
+@{
+    ViewData["Title"] = "Add a Transaction";
+}
+
+<h2>Add a Transaction</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="HandleNewTransaction">
+            <div class="form-group">
+                <label for="committeeId" class="control-label">Choose a Committee</label>
+                @Html.DropDownList("committeeId", new SelectList(Model, "Id", "Name"), "Select a Committee", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="amountSpent" class="control-label">Amount Committee Spent</label>
+                <input name="amountSpent" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="amountAdded" class="control-label">Amount Committee Earned</label>
+                <input name="amountAdded" class="form-control" type="number" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Process Transaction" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@foreach (Committee committee in Model)
+{
+    <h4>@committee.Name</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Committee Budget
+                </th>
+                <th>
+                    Money Earned
+                </th>
+            </tr>
+        </thead>
+        @foreach (Transaction transaction in committee.Transactions)
+        {
+            <tr>
+                <td>
+                    @(committee.Budget - transaction.AmountSpent)
+                </td>
+                <td>
+                    @transaction.AmountAdded
+                </td>
+            </tr>
+        }
+    </table>
+}

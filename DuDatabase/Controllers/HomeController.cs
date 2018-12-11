@@ -28,31 +28,20 @@ namespace DuDatabase.Controllers
             return View(context.Members.ToList());
         }
 
-        public IActionResult AddDues()
+
+        public IActionResult AddCommittee()
         {
-            var allDues = context.Dues.Include(member => member.Member).ToList();
-            return View(allDues);
+            return View(context.Committees.ToList());
         }
 
         [HttpPost]
-        public IActionResult HandleNewMember(string firstName, string lastName, string email, string phone)
+        public IActionResult HandleNewMember(string firstName, string lastName, string email, string phone, float amount, string paymentPlan, float serviceHours, float fundraising)
         {
-            Member newMember = new Member() { FirstName = firstName, LastName = lastName, Email = email, PhoneNumber = phone };
+            Member newMember = new Member() { FirstName = firstName, LastName = lastName, Email = email, PhoneNumber = phone, Amount = amount, PaymentPlan = paymentPlan, ServiceHours = serviceHours, Fundraising = fundraising };
             context.Members.Add(newMember);
             context.SaveChanges();
 
             return RedirectToAction("AddMember");
-        }
-
-        [HttpPost]
-        public IActionResult HandleNewDues(int memberId, float amount, string paymentPlan, float serviceHours, float fundraising)
-        {
-            Member existingMember = context.Members.Where(existingMem => existingMem.Id == memberId).Single();
-            Dues newDues = new Dues() { Member = existingMember, Amount = amount, PaymentPlan = paymentPlan, ServiceHours = serviceHours, Fundraising = fundraising};
-            context.Dues.Add(newDues);
-            context.SaveChanges();
-
-            return RedirectToAction("AddDues");
         }
 
         public IActionResult Error()

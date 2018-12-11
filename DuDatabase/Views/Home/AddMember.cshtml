@@ -26,6 +26,22 @@
                 <input name="phone" class="form-control" />
             </div>
             <div class="form-group">
+                <label for="amount" class="control-label">How much does the brother owe?</label>
+                <input name="amount" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="paymentPlan" class="control-label">Is this brother on a payment plan?</label>
+                <input name="paymentPlan" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="serviceHours" class="control-label">How many service hours does the brother have?</label>
+                <input name="serviceHours" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="fundraising" class="control-label">How much money has the brother fundraised?</label>
+                <input name="fundraising" class="form-control" />
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Add a new member" class="btn btn-default" />
             </div>
         </form>
@@ -48,6 +64,18 @@
             <th>
                 Phone Number
             </th>
+            <th>
+                Total Dues
+            </th>
+            <th>
+                Payment Plan
+            </th>
+            <th>
+                Service Hours
+            </th>
+            <th>
+                Fundraising
+            </th>
         </tr>
     </thead>
     @foreach (Member newMem in Model)
@@ -64,6 +92,18 @@
         </td>
         <td>
             @newMem.PhoneNumber
+        </td>
+        <td>
+            @(newMem.Amount + newMem.Fundraising)
+        </td>
+        <td>
+            @newMem.PaymentPlan
+        </td>
+        <td>
+            @newMem.ServiceHours
+        </td>
+        <td>
+            @newMem.Fundraising
         </td>
     </tr>
     }

@@ -8,7 +8,6 @@ namespace DuDatabase.Models
 {
     public class DeltaUpsilonContext : DbContext
     {
-        public DbSet<Dues> Dues { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Committee> Committees { get; set; }

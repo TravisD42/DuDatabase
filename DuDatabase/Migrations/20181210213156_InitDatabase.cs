@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DuDatabase.Migrations
 {
-    public partial class InitialDuDatabase : Migration
+    public partial class InitDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,8 @@ namespace DuDatabase.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Budget = table.Column<float>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    TransactionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -24,19 +25,23 @@ namespace DuDatabase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Dues",
+                name: "Members",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Amount = table.Column<float>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
                     Fundraising = table.Column<float>(nullable: false),
-                    PaymentPlan = table.Column<bool>(nullable: false),
+                    LastName = table.Column<string>(nullable: true),
+                    PaymentPlan = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
                     ServiceHours = table.Column<float>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dues", x => x.Id);
+                    table.PrimaryKey("PK_Members", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,29 +61,6 @@ namespace DuDatabase.Migrations
                         name: "FK_Transactions_Committees_CommitteeId",
                         column: x => x.CommitteeId,
                         principalTable: "Committees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Members",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DuesId = table.Column<int>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Members", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Members_Dues_DuesId",
-                        column: x => x.DuesId,
-                        principalTable: "Dues",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -120,13 +102,6 @@ namespace DuDatabase.Migrations
                 column: "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Members_DuesId",
-                table: "Members",
-                column: "DuesId",
-                unique: true,
-                filter: "[DuesId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_CommitteeId",
                 table: "Transactions",
                 column: "CommitteeId");
@@ -145,9 +120,6 @@ namespace DuDatabase.Migrations
 
             migrationBuilder.DropTable(
                 name: "Committees");
-
-            migrationBuilder.DropTable(
-                name: "Dues");
         }
     }
 }

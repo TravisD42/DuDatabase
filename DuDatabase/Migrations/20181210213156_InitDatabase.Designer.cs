@@ -11,8 +11,8 @@ using System;
 namespace DuDatabase.Migrations
 {
     [DbContext(typeof(DeltaUpsilonContext))]
-    [Migration("20181207072256_InitialDuDatabase")]
-    partial class InitialDuDatabase
+    [Migration("20181210213156_InitDatabase")]
+    partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,8 @@ namespace DuDatabase.Migrations
                     b.Property<float>("Budget");
 
                     b.Property<string>("Name");
+
+                    b.Property<int>("TransactionId");
 
                     b.HasKey("Id");
 
@@ -53,44 +55,28 @@ namespace DuDatabase.Migrations
                     b.ToTable("CommitteeMembers");
                 });
 
-            modelBuilder.Entity("DuDatabase.Models.Dues", b =>
+            modelBuilder.Entity("DuDatabase.Models.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<float>("Amount");
 
-                    b.Property<float>("Fundraising");
-
-                    b.Property<bool>("PaymentPlan");
-
-                    b.Property<float>("ServiceHours");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Dues");
-                });
-
-            modelBuilder.Entity("DuDatabase.Models.Member", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("DuesId");
-
                     b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
 
+                    b.Property<float>("Fundraising");
+
                     b.Property<string>("LastName");
+
+                    b.Property<string>("PaymentPlan");
 
                     b.Property<string>("PhoneNumber");
 
-                    b.HasKey("Id");
+                    b.Property<float>("ServiceHours");
 
-                    b.HasIndex("DuesId")
-                        .IsUnique()
-                        .HasFilter("[DuesId] IS NOT NULL");
+                    b.HasKey("Id");
 
                     b.ToTable("Members");
                 });
@@ -124,13 +110,6 @@ namespace DuDatabase.Migrations
                         .WithMany("CommitteeMembers")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DuDatabase.Models.Member", b =>
-                {
-                    b.HasOne("DuDatabase.Models.Dues", "Dues")
-                        .WithOne("Member")
-                        .HasForeignKey("DuDatabase.Models.Member", "DuesId");
                 });
 
             modelBuilder.Entity("DuDatabase.Models.Transaction", b =>

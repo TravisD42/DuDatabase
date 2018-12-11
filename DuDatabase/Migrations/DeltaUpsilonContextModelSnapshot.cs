@@ -54,41 +54,26 @@ namespace DuDatabase.Migrations
                     b.ToTable("CommitteeMembers");
                 });
 
-            modelBuilder.Entity("DuDatabase.Models.Dues", b =>
+            modelBuilder.Entity("DuDatabase.Models.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<float>("Amount");
 
-                    b.Property<float>("Fundraising");
-
-                    b.Property<int>("MemberId");
-
-                    b.Property<string>("PaymentPlan");
-
-                    b.Property<float>("ServiceHours");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId")
-                        .IsUnique();
-
-                    b.ToTable("Dues");
-                });
-
-            modelBuilder.Entity("DuDatabase.Models.Member", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
                     b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
 
+                    b.Property<float>("Fundraising");
+
                     b.Property<string>("LastName");
 
+                    b.Property<string>("PaymentPlan");
+
                     b.Property<string>("PhoneNumber");
+
+                    b.Property<float>("ServiceHours");
 
                     b.HasKey("Id");
 
@@ -123,14 +108,6 @@ namespace DuDatabase.Migrations
                     b.HasOne("DuDatabase.Models.Member", "Member")
                         .WithMany("CommitteeMembers")
                         .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DuDatabase.Models.Dues", b =>
-                {
-                    b.HasOne("DuDatabase.Models.Member", "Member")
-                        .WithOne("Dues")
-                        .HasForeignKey("DuDatabase.Models.Dues", "MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

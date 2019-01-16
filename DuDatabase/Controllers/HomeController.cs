@@ -72,22 +72,8 @@ namespace DuDatabase.Controllers
                 committeeNames.Add(committee);
             }
 
-            var allEntries = context.CommitteehasMembers.Include(memInCommittee => memInCommittee.Member).ToList();
-            foreach (CommitteehasMembers chm in allEntries)
-            {
-                listofMembers.Add(chm);
-            }
-
-            var allComm = context.CommitteehasMembers.Include(commInMember => commInMember.Committee).ToList();
-            foreach (CommitteehasMembers chm2 in allComm)
-            {
-                listofComm.Add(chm2);
-            }
-
             ViewData["memberNames"] = memberNames;
             ViewData["committeeNames"] = committeeNames;
-            ViewData["listofMembers"] = listofMembers;
-            ViewData["listofComm"] = listofComm;
 
             return View();
         }
@@ -98,7 +84,6 @@ namespace DuDatabase.Controllers
             Committee exisitngCommittee = context.Committees.Where(committee => committee.Id == committeeId).Single();
             Member existingMember = context.Members.Where(member => member.Id == memberId).Single();
             CommitteehasMembers newMem = new CommitteehasMembers() { MemberId = memberId, CommitteeId = committeeId };
-            // This is where I maybe have to send a new view?
             context.CommitteehasMembers.Add(newMem);
             context.SaveChanges();
 
